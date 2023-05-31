@@ -1,26 +1,6 @@
 B5ThinkCMF
-=========
-
-### 介绍
-基于 thinkphp 6.0 + bootstrap 3，构架的通用后台开发框架，简洁、易读、方便系统扩展及二次开发。
-系统完全开源，数据库文件在public目录下，超管默认为：admin，123456。
-
-### 系统演示
-地址：http://b5thinkcmf.b5net.com
-
-账号：ceshi
-
-密码：123456
-
-### 下载地址：
-
-gitee: https://gitee.com/b5net/b5-think-cmf
-github: https://github.com/qin795217119/b5think6cmf
-
-前端采用java的若依框架前端并进行了一定的修改，使用文档可参考 http://doc.ruoyi.vip/ruoyi/document/qdsc.html
 
 ### 内置功能
-
 1. 人员管理：人员是系统操作者，该功能主要完成系统用户配置。
 2. 组织架构：配置系统组织机构（公司、部门、小组），树结构展现支持。
 3. 菜单管理：配置系统菜单，操作权限，按钮权限标识等。
@@ -30,8 +10,6 @@ github: https://github.com/qin795217119/b5think6cmf
 7. 通知公告：系统通知公告信息发布维护。
 8. 表单构建：快速构建form表单html代码
 9. 代码生成：一键生成基于表的控制器、模型以及html页面
-
-
 ### 使用说明
 
 1. 环境推荐使用 PHP 7.4 + Mysql 5.7/8 +Nginx，系统搭建参考thinkphp6官方文档
