@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地数据库
+ Source Server         : 本地
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
- Source Schema         : b5thinkphp6cmf
+ Source Schema         : thinkphp_cmf
 
  Target Server Type    : MySQL
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 08/04/2022 13:44:35
+ Date: 31/05/2023 17:18:16
 */
 
 SET NAMES utf8mb4;
@@ -28,8 +28,8 @@ CREATE TABLE `b5net_admin`  (
   `realname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '人员姓名',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1' COMMENT '状态',
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10009 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员表' ROW_FORMAT = Dynamic;
@@ -91,6 +91,36 @@ INSERT INTO `b5net_admin_struct` VALUES (10008, 101);
 INSERT INTO `b5net_admin_struct` VALUES (10007, 104);
 
 -- ----------------------------
+-- Table structure for b5net_books
+-- ----------------------------
+DROP TABLE IF EXISTS `b5net_books`;
+CREATE TABLE `b5net_books`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '数据管理ID',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '书籍名称',
+  `create_at` datetime(0) NOT NULL COMMENT '创建时间',
+  `status` tinyint(255) UNSIGNED NULL DEFAULT 0 COMMENT '状态:0=正常，1=下架，2=已删除',
+  `price` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '售价',
+  `borrowing` int(10) NULL DEFAULT NULL COMMENT '借阅次数',
+  `cate_id` int(11) NULL DEFAULT NULL COMMENT '书籍类型',
+  `number` smallint(6) NOT NULL COMMENT '书籍库存',
+  `update_at` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `delete_at` datetime(0) NULL DEFAULT NULL COMMENT '删除时间',
+  `introduce` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '书籍介绍',
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '书籍封面图',
+  `press` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '出版社',
+  `pages` int(255) UNSIGNED NULL DEFAULT 0 COMMENT '书籍页数',
+  `publish_date` date NULL DEFAULT NULL COMMENT '出版年',
+  `author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '作者',
+  `admin_id` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '创建管理ID',
+  `struct_id` int(11) NULL DEFAULT NULL COMMENT '部门ID',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '书籍信息' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b5net_books
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for b5net_config
 -- ----------------------------
 DROP TABLE IF EXISTS `b5net_config`;
@@ -104,8 +134,8 @@ CREATE TABLE `b5net_config`  (
   `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '配置值',
   `extra` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '配置项',
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '配置说明',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `type`(`type`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统配置表' ROW_FORMAT = Dynamic;
@@ -114,7 +144,7 @@ CREATE TABLE `b5net_config`  (
 -- Records of b5net_config
 -- ----------------------------
 INSERT INTO `b5net_config` VALUES (1, '配置分组', 'sys_config_group', 'array', '1', '', 'site:基本设置\r\nwx:微信设置\r\nsms:短信配置\r\nemail:邮箱配置\r\nimgwater:图片水印', '', '', '2020-12-31 14:01:18', '2022-03-22 20:45:21');
-INSERT INTO `b5net_config` VALUES (2, '系统名称', 'sys_config_sysname', 'text', '1', 'site', 'B5ThinkCMF', '', '系统后台显示的名称', '2020-12-31 14:01:18', '2022-03-23 12:41:01');
+INSERT INTO `b5net_config` VALUES (2, '系统名称', 'sys_config_sysname', 'text', '1', 'site', '图书管理系统', '', '系统后台显示的名称', '2020-12-31 14:01:18', '2023-05-30 16:53:28');
 INSERT INTO `b5net_config` VALUES (4, '阿里accessKeyId', 'sms_ali_key', 'text', '0', 'sms', '', '', '阿里短信-AccessKey ID', '2021-01-11 19:26:13', '2021-01-17 21:27:04');
 INSERT INTO `b5net_config` VALUES (5, '阿里accessSecret', 'sms_ali_secret', 'text', '0', 'sms', '', '', '阿里短信-AccessKey Secret', '2021-01-11 19:26:45', '2021-01-17 21:27:04');
 INSERT INTO `b5net_config` VALUES (6, '阿里signName', 'sms_ali_signname', 'text', '0', 'sms', '', '', '阿里短信-签名', '2021-01-11 19:27:53', '2021-01-17 21:27:04');
@@ -126,11 +156,11 @@ INSERT INTO `b5net_config` VALUES (13, '邮箱地址', 'sys_email_username', 'te
 INSERT INTO `b5net_config` VALUES (14, '授权密码', 'sys_email_password', 'text', '0', 'email', 'UCSMPMHNDJSALQVW', '', '', '2021-01-22 15:29:34', '2021-01-23 13:03:59');
 INSERT INTO `b5net_config` VALUES (15, '服务端口', 'sys_email_port', 'text', '0', 'email', '465', '', '', '2021-01-22 15:30:05', '2021-01-23 13:03:59');
 INSERT INTO `b5net_config` VALUES (16, '是否SSL', 'sys_email_ssl', 'select', '0', 'email', '1', '0:否\r\n1:是', '', '2021-01-22 15:31:23', '2021-01-23 13:03:59');
-INSERT INTO `b5net_config` VALUES (17, '网站标题', 'web_site_name', 'text', '0', 'site', 'XXXXXX公司', '', '', '2021-03-24 15:09:24', '2022-03-21 16:28:31');
-INSERT INTO `b5net_config` VALUES (18, '水印文字', 'img_water_text', 'text', '0', 'imgwater', 'B5YiiCMF', '', '', '2021-07-29 20:44:32', '2022-03-21 13:26:25');
-INSERT INTO `b5net_config` VALUES (19, '水印文字大小', 'img_water_text_font', 'text', '0', 'imgwater', '20', '', '', '2021-07-29 20:44:48', '2022-03-21 13:26:25');
-INSERT INTO `b5net_config` VALUES (20, '水印文字颜色', 'img_water_text_color', 'text', '0', 'imgwater', 'ff0000', '', '', '2021-07-29 20:45:03', '2022-03-21 13:26:25');
-INSERT INTO `b5net_config` VALUES (21, '水印位置', 'img_water_text_position', 'select', '0', 'imgwater', '1', '1:左上角\r\n3:右上角\r\n5:垂直水平居中\r\n7:左下角\r\n9:右下角', '对应think-image的水印位置 1-9', '2021-07-29 20:45:28', '2022-03-21 13:26:25');
+INSERT INTO `b5net_config` VALUES (17, '网站标题', 'web_site_name', 'text', '0', 'site', '图书管理系统', '', '', '2021-03-24 15:09:24', '2023-05-30 16:53:28');
+INSERT INTO `b5net_config` VALUES (18, '水印文字', 'img_water_text', 'text', '0', 'imgwater', '图书管理系统', '', '', '2021-07-29 20:44:32', '2023-05-31 10:03:35');
+INSERT INTO `b5net_config` VALUES (19, '水印文字大小', 'img_water_text_font', 'text', '0', 'imgwater', '20', '', '', '2021-07-29 20:44:48', '2023-05-31 10:03:35');
+INSERT INTO `b5net_config` VALUES (20, '水印文字颜色', 'img_water_text_color', 'text', '0', 'imgwater', 'ff0000', '', '', '2021-07-29 20:45:03', '2023-05-31 10:03:35');
+INSERT INTO `b5net_config` VALUES (21, '水印位置', 'img_water_text_position', 'select', '0', 'imgwater', '1', '1:左上角\r\n3:右上角\r\n5:垂直水平居中\r\n7:左下角\r\n9:右下角', '对应think-image的水印位置 1-9', '2021-07-29 20:45:28', '2023-05-31 10:03:35');
 INSERT INTO `b5net_config` VALUES (22, '是否演示模式', 'demo_mode', 'select', '0', '', '1', '1:是\r\n0:否', '', '2022-03-21 16:17:48', '2022-03-21 16:17:48');
 
 -- ----------------------------
@@ -147,10 +177,10 @@ CREATE TABLE `b5net_loginlog`  (
   `net` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
   `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '提示消息',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '访问时间',
-  `update_time` datetime NULL DEFAULT NULL,
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
+  `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b5net_loginlog
@@ -167,6 +197,10 @@ INSERT INTO `b5net_loginlog` VALUES (22, 'admin', '127.0.0.1', '本机地址', '
 INSERT INTO `b5net_loginlog` VALUES (23, 'admin', '127.0.0.1', '本机地址', 'Chrome 99.0.4844.74', 'Windows 10.0', '', '1', '登录成功', '2022-03-31 17:48:14', '2022-03-31 17:48:14');
 INSERT INTO `b5net_loginlog` VALUES (24, 'admin', '127.0.0.1', '本机地址', 'Chrome 99.0.4844.74', 'Windows 10.0', '', '1', '登录成功', '2022-04-08 11:50:50', '2022-04-08 11:50:50');
 INSERT INTO `b5net_loginlog` VALUES (25, 'admin', '127.0.0.1', '本机地址', 'Chrome 99.0.4844.74', 'Windows 10.0', '', '1', '登录成功', '2022-04-08 12:42:22', '2022-04-08 12:42:22');
+INSERT INTO `b5net_loginlog` VALUES (26, 'admin', '127.0.0.1', '本机地址', 'Chrome 113.0.0.0', 'Windows 10.0', '', '0', '验证码错误', '2023-05-30 16:51:13', '2023-05-30 16:51:13');
+INSERT INTO `b5net_loginlog` VALUES (27, 'admin', '127.0.0.1', '本机地址', 'Chrome 113.0.0.0', 'Windows 10.0', '', '1', '登录成功', '2023-05-30 16:51:22', '2023-05-30 16:51:22');
+INSERT INTO `b5net_loginlog` VALUES (28, 'admin', '127.0.0.1', '本机地址', 'Chrome 113.0.0.0', 'Windows 10.0', '', '1', '登录成功', '2023-05-31 11:42:33', '2023-05-31 11:42:33');
+INSERT INTO `b5net_loginlog` VALUES (29, 'admin', '127.0.0.1', '本机地址', 'Chrome 113.0.0.0', 'Windows 10.0', '', '1', '登录成功', '2023-05-31 17:08:59', '2023-05-31 17:08:59');
 
 -- ----------------------------
 -- Table structure for b5net_menu
@@ -184,21 +218,21 @@ CREATE TABLE `b5net_menu`  (
   `is_refresh` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '是否刷新（0不刷新 1刷新）',
   `perms` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '权限标识',
   `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '菜单图标',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `note` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `parent_id`(`parent_id`) USING BTREE,
   INDEX `listsort`(`listsort`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10804 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10806 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b5net_menu
 -- ----------------------------
 INSERT INTO `b5net_menu` VALUES (1, '系统管理', 0, 10, '', 0, 'M', '1', '0', '', 'fa fa-cog', '2021-01-03 07:25:11', '2022-03-20 16:00:14', '系统管理');
-INSERT INTO `b5net_menu` VALUES (2, '权限管理', 0, 20, '', 0, 'M', '1', '0', '', 'fa fa-id-card-o', '2021-01-03 07:25:11', '2022-03-20 16:00:10', '权限管理');
+INSERT INTO `b5net_menu` VALUES (2, '权限管理', 0, 20, '', 0, 'M', '1', '0', '', 'fa fa-id-card-o', '2021-01-03 07:25:11', '2023-05-31 17:07:13', '权限管理');
 INSERT INTO `b5net_menu` VALUES (3, '系统工具', 0, 30, '', 0, 'M', '1', '0', '', 'fa fa-cloud', '2021-07-29 20:28:41', '2022-03-20 15:59:55', '');
-INSERT INTO `b5net_menu` VALUES (90, '', 0, 99, 'http://www.b5net.com', 1, 'C', '1', '0', '', 'fa fa-send', '2021-01-05 12:05:30', '2021-01-18 17:07:15', '');
+INSERT INTO `b5net_menu` VALUES (90, '官方网站', 0, 99, 'http://www.b5net.com', 1, 'C', '0', '0', 'administrator', 'fa fa-send', '2021-01-05 12:05:30', '2023-05-31 10:09:14', '官方网站');
 INSERT INTO `b5net_menu` VALUES (100, '人员管理', 2, 1, 'admin/index', 0, 'C', '1', '0', 'admin:admin:index', 'fa fa-user-o', '2021-01-03 07:25:11', '2022-03-20 16:02:24', '人员管理');
 INSERT INTO `b5net_menu` VALUES (101, '角色管理', 2, 2, 'role/index', 0, 'C', '1', '0', 'admin:role:index', 'fa fa-address-book-o', '2021-01-03 07:25:11', '2021-01-03 07:25:11', '角色管理');
 INSERT INTO `b5net_menu` VALUES (102, '组织架构', 2, 3, 'struct/index', 0, 'C', '1', '0', 'admin:struct:index', 'fa fa-sitemap', '2021-01-03 07:25:11', '2021-01-03 07:25:11', '组织架构');
@@ -241,6 +275,8 @@ INSERT INTO `b5net_menu` VALUES (10703, '公告批量删除', 107, 4, '', 0, 'F'
 INSERT INTO `b5net_menu` VALUES (10801, '添加岗位', 108, 1, '', 0, 'F', '1', '0', 'admin:position:add', '', NULL, NULL, '');
 INSERT INTO `b5net_menu` VALUES (10802, '编辑岗位', 108, 2, '', 0, 'F', '1', '0', 'admin:position:edit', '', NULL, NULL, '');
 INSERT INTO `b5net_menu` VALUES (10803, '删除岗位', 108, 3, '', 0, 'F', '1', '0', 'admin:position:dropall', '', NULL, NULL, '');
+INSERT INTO `b5net_menu` VALUES (10804, '图书管理', 0, 40, '', 0, 'M', '1', '0', '', 'fa fa-bars', '2023-05-31 17:07:58', '2023-05-31 17:09:32', '');
+INSERT INTO `b5net_menu` VALUES (10805, '图书信息', 10804, 0, 'books/index', 0, 'C', '1', '0', 'admin:books:index', 'fa fa-navicon', '2023-05-31 17:12:22', '2023-05-31 17:12:34', '');
 
 -- ----------------------------
 -- Table structure for b5net_notice
@@ -253,16 +289,16 @@ CREATE TABLE `b5net_notice`  (
   `desc` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '公告内容',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1' COMMENT '公告状态（1正常 0关闭）',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b5net_notice
 -- ----------------------------
-INSERT INTO `b5net_notice` VALUES (1, '【公告】： B5LaravelCMF新版本发布啦', '2', NULL, '<p>新版本内容</p><p><br></p><p>新版本内容</p><p>新版本内容</p><p>新版本内容</p><p><br><img src=\"http://tp6cmf.my/uploads/editor/2022/03/22/39f66f7bb77e23ad05bf2dc50524fcd0.jpg\" style=\"width: 500px;\" data-filename=\"u=1160057685,2978145411&amp;fm=26&amp;gp=0.jpg\"></p>', '1', '2022-03-12 11:33:42', '2022-03-22 19:42:08');
-INSERT INTO `b5net_notice` VALUES (2, '【通知】：B5LaravelCMF系统凌晨维护', '1', NULL, '<p><img src=\"http://tp6cmf.my/uploads/editor/2022/03/22/e61034cba38250949bd2c26319085033.jpg\" style=\"width: 500px;\" data-filename=\"u=3671441873,259090506&amp;fm=26&amp;gp=0.jpg\"><font color=\"#0000ff\">维护内容</font></p><p><font color=\"#0000ff\"><br></font></p>', '1', '2022-03-20 11:33:42', '2022-03-22 19:42:17');
+INSERT INTO `b5net_notice` VALUES (1, '【公告】： 图书管理系统 新版本发布啦', '2', NULL, '<p><b>新版本内容</b></p><p><b><br></b></p><p><b>新版本内容</b></p><p><b>新版本内容</b></p><p><b>新版本内容</b></p><p><br></p>', '1', '2022-03-12 11:33:42', '2023-05-31 10:01:53');
+INSERT INTO `b5net_notice` VALUES (2, '【通知】：图书管理系统凌晨维护', '1', NULL, '<p style=\"text-align: center; \"><font color=\"#0000ff\">维护内容</font></p><p style=\"text-align: center;\"><font color=\"#0000ff\"><br></font></p>', '1', '2022-03-20 11:33:42', '2023-05-31 10:02:56');
 
 -- ----------------------------
 -- Table structure for b5net_position
@@ -275,8 +311,8 @@ CREATE TABLE `b5net_position`  (
   `listsort` int(11) NULL DEFAULT 100 COMMENT '排序',
   `status` tinyint(1) NULL DEFAULT 1 COMMENT '状态',
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `create_time` datetime NULL DEFAULT NULL,
-  `update_time` datetime NULL DEFAULT NULL,
+  `create_time` datetime(0) NULL DEFAULT NULL,
+  `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '岗位表' ROW_FORMAT = Dynamic;
 
@@ -299,8 +335,8 @@ CREATE TABLE `b5net_role`  (
   `data_scope` mediumint(5) NOT NULL DEFAULT 1 COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
   `listsort` int(11) NOT NULL DEFAULT 0 COMMENT '显示顺序',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1' COMMENT '角色状态（1正常 0停用）',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `note` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `rolekey`(`rolekey`) USING BTREE,
@@ -325,14 +361,13 @@ CREATE TABLE `b5net_role_menu`  (
 -- ----------------------------
 -- Records of b5net_role_menu
 -- ----------------------------
+INSERT INTO `b5net_role_menu` VALUES (3, 1);
+INSERT INTO `b5net_role_menu` VALUES (3, 105);
+INSERT INTO `b5net_role_menu` VALUES (3, 107);
 INSERT INTO `b5net_role_menu` VALUES (3, 2);
 INSERT INTO `b5net_role_menu` VALUES (3, 100);
 INSERT INTO `b5net_role_menu` VALUES (3, 102);
 INSERT INTO `b5net_role_menu` VALUES (3, 104);
-INSERT INTO `b5net_role_menu` VALUES (3, 1);
-INSERT INTO `b5net_role_menu` VALUES (3, 105);
-INSERT INTO `b5net_role_menu` VALUES (3, 107);
-INSERT INTO `b5net_role_menu` VALUES (3, 90);
 
 -- ----------------------------
 -- Table structure for b5net_role_struct
@@ -361,10 +396,14 @@ CREATE TABLE `b5net_smscode`  (
   `type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '例如：1注册 2登录 3忘记密码',
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '状态 0未验证 1已验证',
   `os` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '运营商',
-  `create_time` datetime NULL DEFAULT NULL,
-  `update_time` datetime NULL DEFAULT NULL,
+  `create_time` datetime(0) NULL DEFAULT NULL,
+  `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '验证码表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of b5net_smscode
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for b5net_struct
@@ -381,8 +420,8 @@ CREATE TABLE `b5net_struct`  (
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系电话',
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1' COMMENT '部门状态（1正常 0停用）',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '组织架构' ROW_FORMAT = Dynamic;
 
@@ -413,6 +452,10 @@ CREATE TABLE `b5net_wechat_access`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信jsapi和access' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of b5net_wechat_access
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for b5net_wechat_users
 -- ----------------------------
 DROP TABLE IF EXISTS `b5net_wechat_users`;
@@ -423,8 +466,8 @@ CREATE TABLE `b5net_wechat_users`  (
   `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '昵称',
   `headimg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '头像地址',
   `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '所属活动',
-  `update_time` datetime NULL DEFAULT NULL COMMENT '资料更新时间',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '添加时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '资料更新时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '添加时间',
   `sex` tinyint(1) NOT NULL DEFAULT 0 COMMENT '性别',
   `city` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '城市',
   `country` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '国家',
@@ -453,8 +496,8 @@ CREATE TABLE `demo_media`  (
   `video` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '视频',
   `file` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '单文件',
   `files` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '多文件',
-  `create_time` datetime NULL DEFAULT NULL,
-  `update_time` datetime NULL DEFAULT NULL,
+  `create_time` datetime(0) NULL DEFAULT NULL,
+  `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
@@ -471,9 +514,13 @@ CREATE TABLE `test_goods`  (
   `id` int(10) NOT NULL,
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '商品名称',
   `price` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '价格',
-  `create_time` datetime NULL DEFAULT NULL,
-  `update_time` datetime NULL DEFAULT NULL,
+  `create_time` datetime(0) NULL DEFAULT NULL,
+  `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of test_goods
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
