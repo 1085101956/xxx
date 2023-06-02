@@ -54,49 +54,49 @@
                         }
                     },
                     {
-                        field: 'img',
-                        title: '单图片',
-                        formatter: function (value, row, index) {
-                            return $.table.imageView(row,'img');
-                        }
+                        field: 'title',
+                        title: '书籍名称',
+                        // formatter: function (value, row, index) {
+                        //     return $.table.imageView(row,'img');
+                        // }
                     },
                     {
                         field: 'imgs',
                         title: '多图片',
-                        formatter: function (value, row, index) {
-                            return $.table.imageView(row,'imgs');
-                        }
+                        // formatter: function (value, row, index) {
+                        //     return $.table.imageView(row,'imgs');
+                        // }
                     },
                     {
                         field: 'crop',
                         title: '裁剪图片',
-                        formatter: function (value, row, index) {
-                            return $.table.imageView(row,'crop');
-                        }
+                        // formatter: function (value, row, index) {
+                        //     return $.table.imageView(row,'crop');
+                        // }
                     },
                     {
                         title: '视频链接',
                         field: 'video',
                         align: 'center',
-                        formatter: function (value, row, index) {
-                            return $.table.tooltip(value,20,'link');
-                        }
+                        // formatter: function (value, row, index) {
+                        //     return $.table.tooltip(value,20,'link');
+                        // }
                     },
                     {
                         title: '单文件',
                         field: 'file',
                         align: 'center',
-                        formatter: function (value, row, index) {
-                            return $.table.tooltip(value,20,'copy');
-                        }
+                        // formatter: function (value, row, index) {
+                        //     return $.table.tooltip(value,20,'copy');
+                        // }
                     },
                     {
                         title: '多文件',
                         field: 'files',
                         align: 'center',
-                        formatter: function (value, row, index) {
-                            return $.table.tooltip(value,20,'open');
-                        }
+                        // formatter: function (value, row, index) {
+                        //     return $.table.tooltip(value,20,'open');
+                        // }
                     },
                     {field: 'create_time', title: '创建时间', align: 'center', sortable: true},
                     {field: 'update_time', title: '更新时间', align: 'center', visible: false},

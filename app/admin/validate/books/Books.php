@@ -1,9 +1,8 @@
 <?php
-namespace app\admin\validate;
+namespace app\admin\validate\books;
 
 use think\Validate;
-
-class AdminValidate extends Validate
+class Books extends Validate
 {
     protected $rule = [
         'username' => 'require|min:2|max:30|alphaDash|unique:b5net_admin',
