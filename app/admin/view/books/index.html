@@ -40,8 +40,8 @@
     <script>
         $(function () {
             var options = {
-                modalName: "图片",
-                sortName:'id',
+                modalName: "图书管理",
+                sortName:'a.id',
                 sortOrder: "desc",
                 columns: [
                     {checkbox: true},
@@ -78,7 +78,7 @@
                     },
                     {
                         title: '书籍类型',
-                        field: 'cate_title',
+                        field: 'name',
                         align: 'center',
                         // formatter: function (value, row, index) {
                         //     return $.table.tooltip(value,20,'copy');
@@ -95,11 +95,11 @@
                     {field: 'introduce', title: '书籍介绍', align: 'center'},
                     {field: 'image', title: '书籍封面图', align: 'center',
                         formatter: function (value, row, index) {
-                            return $.table.imageView(row,'crop');
+                            return $.table.imageView(row,'image');
                         }
                     },
-                    {field: 'create_time', title: '创建时间', align: 'center', sortable: true},
-                    {field: 'update_time', title: '更新时间', align: 'center', visible: false},
+                    {field: 'publish_date', title: '出版时间', align: 'center', sortable: true},
+
                     {
                         title: '操作',
                         align: 'center',
@@ -107,6 +107,8 @@
                             var actions = [];
                             actions.push('<a class="btn btn-success btn-xs" href="javascript:;" onclick="$.operate.editFull(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                             actions.push('<a class="btn btn-danger btn-xs" href="javascript:;" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs" href="javascript:;" onclick="$.modal.enable(\'' + row.id + '\')"><i class="fa fa-send"></i>按钮</a> ')
+
                             return actions.join('');
                         }
                     }
