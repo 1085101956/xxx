@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 08/06/2023 17:09:11
+ Date: 08/06/2023 23:49:21
 */
 
 SET NAMES utf8mb4;
@@ -114,6 +114,7 @@ CREATE TABLE `b5net_books`  (
   `admin_id` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '创建管理ID',
   `struct_id` int(11) NULL DEFAULT 0 COMMENT '部门ID',
   `code` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '书籍编号',
+  `sales_number` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '售卖本书',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `code`(`code`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '书籍信息' ROW_FORMAT = Dynamic;
@@ -121,16 +122,16 @@ CREATE TABLE `b5net_books`  (
 -- ----------------------------
 -- Records of b5net_books
 -- ----------------------------
-INSERT INTO `b5net_books` VALUES (1, '高性能MySQL', '2023-06-07 14:23:32', 0, 128.00, 0, 1, 10, '2023-06-07 14:23:32', NULL, '', '/uploads/demo/2023/06/07/ab785bde8e1554c99bdbdfa1b529e57c.png', '电子工业出版社', 764, '2022-05-30', 'Peter Zaitsev', 0, 0, NULL);
-INSERT INTO `b5net_books` VALUES (2, 'MySQL排错指南', '2023-06-07 15:18:50', 0, 49.00, 0, 2, 10, '2023-06-07 15:18:50', NULL, '', '/uploads/demo/2023/06/07/ab785bde8e1554c99bdbdfa1b529e57c.png', '人民邮电出版社', 100, '2023-06-08', 'Sevta Smirnova', 0, 0, NULL);
-INSERT INTO `b5net_books` VALUES (3, 'PHP与MySQL程序设计', '2023-06-07 16:55:47', 0, 299.00, 0, 1, 10, '2023-06-07 16:55:47', NULL, 'php与MYSQL5书是久负盛名的经典著作，以涵盖全面详实而著称，对主题的选取和组织从实用出发，在讲述知识之外还加入了作者自己的应用经验，并提供了密集的实战代码示例，充分体现了作者深厚的开发功力。书中对PHP的介绍是迄今为止最为全面的。', '/uploads/demo/2023/06/07/5ee4aa4e685f9fd2c87ad8532d396d6a.png', '人民邮电出版社', 100, '2023-06-07', '朱涛江', 10000, 100, NULL);
+INSERT INTO `b5net_books` VALUES (1, '高性能MySQL', '2023-06-07 14:23:32', 0, 128.00, 0, 1, 10, '2023-06-07 14:23:32', NULL, '', '/uploads/demo/2023/06/07/ab785bde8e1554c99bdbdfa1b529e57c.png', '电子工业出版社', 764, '2022-05-30', 'Peter Zaitsev', 0, 0, '22', 0);
+INSERT INTO `b5net_books` VALUES (2, 'MySQL排错指南', '2023-06-07 15:18:50', 0, 49.00, 1, 2, 6, '2023-06-07 15:18:50', NULL, '', '/uploads/demo/2023/06/07/ab785bde8e1554c99bdbdfa1b529e57c.png', '人民邮电出版社', 100, '2023-06-08', 'Sevta Smirnova', 0, 0, '333', 0);
+INSERT INTO `b5net_books` VALUES (3, 'PHP与MySQL程序设计', '2023-06-07 16:55:47', 0, 299.00, 0, 1, 10, '2023-06-07 16:55:47', NULL, 'php与MYSQL5书是久负盛名的经典著作，以涵盖全面详实而著称，对主题的选取和组织从实用出发，在讲述知识之外还加入了作者自己的应用经验，并提供了密集的实战代码示例，充分体现了作者深厚的开发功力。书中对PHP的介绍是迄今为止最为全面的。', '/uploads/demo/2023/06/07/5ee4aa4e685f9fd2c87ad8532d396d6a.png', '人民邮电出版社', 100, '2023-06-07', '朱涛江', 10000, 100, '444', 0);
 
 -- ----------------------------
 -- Table structure for b5net_books_borrowing
 -- ----------------------------
 DROP TABLE IF EXISTS `b5net_books_borrowing`;
 CREATE TABLE `b5net_books_borrowing`  (
-  `id` int(10) NOT NULL COMMENT 'ID',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `caption` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '说明',
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户名称',
   `phone` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户电话',
@@ -140,18 +141,19 @@ CREATE TABLE `b5net_books_borrowing`  (
   `end_time` datetime(0) NULL DEFAULT NULL COMMENT '归还时间',
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '状态 1已卖出 2借阅中 3已归还 4已逾期',
   `books_id` int(11) NOT NULL COMMENT '书籍ID',
-  `return_time` datetime(0) NOT NULL COMMENT '归还时间',
+  `return_time` datetime(0) NULL DEFAULT NULL COMMENT '归还时间',
   `should_time` datetime(0) NULL DEFAULT NULL COMMENT '应归还时间',
   `admin_id` int(10) NOT NULL COMMENT '管理员ID',
   `struct_id` int(10) NOT NULL COMMENT '部门ID',
   `user_id` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '用户ID',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `code`(`code`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '借阅/购买记录' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '借阅/购买记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b5net_books_borrowing
 -- ----------------------------
+INSERT INTO `b5net_books_borrowing` VALUES (1, '2014级学生借阅一个月', '林志伟', '18225120508', '2023-06-08 23:39:22', 'ZS202306085989', 1, NULL, 2, 2, NULL, '2023-06-30 00:00:00', 10000, 100, 1);
 
 -- ----------------------------
 -- Table structure for b5net_cate
@@ -231,12 +233,13 @@ CREATE TABLE `b5net_loginlog`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
   `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b5net_loginlog
 -- ----------------------------
 INSERT INTO `b5net_loginlog` VALUES (40, 'admin', '127.0.0.1', '本机地址', 'Chrome 113.0.0.0', 'Windows 10.0', '', '1', '登录成功', '2023-06-07 16:18:34', '2023-06-07 16:18:34');
+INSERT INTO `b5net_loginlog` VALUES (41, 'admin', '127.0.0.1', '本机地址', 'Chrome 113.0.0.0', 'Windows 10.0', '', '1', '登录成功', '2023-06-08 22:37:42', '2023-06-08 22:37:42');
 
 -- ----------------------------
 -- Table structure for b5net_menu
@@ -277,7 +280,7 @@ INSERT INTO `b5net_menu` VALUES (104, '登录日志', 2, 5, 'loginlog/index', 0,
 INSERT INTO `b5net_menu` VALUES (105, '参数配置', 1, 1, 'config/index', 0, 'C', '1', '0', 'admin:config:index', 'fa fa-sliders', '2021-01-03 07:25:11', '2021-01-05 12:20:56', '参数配置');
 INSERT INTO `b5net_menu` VALUES (106, '网站设置', 1, 0, 'config/site', 0, 'C', '1', '0', 'admin:config:site', 'fa fa-object-group', '2021-01-11 22:17:31', '2021-01-11 22:39:46', '网站设置');
 INSERT INTO `b5net_menu` VALUES (107, '通知公告', 1, 10, 'notice/index', 0, 'C', '1', '0', 'admin:notice:index', 'fa fa-bullhorn', '2021-01-03 07:25:11', '2021-03-17 14:05:34', '通知公告');
-INSERT INTO `b5net_menu` VALUES (108, '岗位管理', 1, 2, 'position/index', 0, 'C', '1', '0', 'admin:position:index', '', NULL, NULL, '');
+INSERT INTO `b5net_menu` VALUES (108, '岗位管理', 2, 2, 'position/index', 0, 'C', '1', '0', 'admin:position:index', '', NULL, '2023-06-08 17:14:15', '');
 INSERT INTO `b5net_menu` VALUES (150, '代码生成', 3, 3, 'tool/create', 0, 'C', '1', '0', 'admin:tool:create', '', NULL, NULL, '');
 INSERT INTO `b5net_menu` VALUES (151, '表单构建', 3, 2, 'tool/build', 0, 'C', '1', '0', 'admin:tool:build', '', NULL, NULL, '');
 INSERT INTO `b5net_menu` VALUES (152, '图片操作', 3, 1, 'demo.media/index', 0, 'C', '1', '0', 'admin:demo.media:index', '', '2021-07-29 20:29:15', '2021-07-29 20:29:15', '');
@@ -470,13 +473,13 @@ CREATE TABLE `b5net_struct`  (
 -- ----------------------------
 -- Records of b5net_struct
 -- ----------------------------
-INSERT INTO `b5net_struct` VALUES (100, '冰舞科技', '', 0, '0', 0, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2022-03-19 16:20:29');
-INSERT INTO `b5net_struct` VALUES (101, '北京总公司', '冰舞科技', 100, '0,100', 1, '冰舞', '18888888888', '', '1', '2020-12-24 11:33:42', '2022-03-19 16:21:09');
-INSERT INTO `b5net_struct` VALUES (103, '研发部门', '冰舞科技,北京总公司', 101, '0,100,101', 1, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2022-03-19 16:21:01');
-INSERT INTO `b5net_struct` VALUES (104, '市场部门', '冰舞科技,北京总公司', 101, '0,100,101', 2, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2022-03-19 16:21:01');
-INSERT INTO `b5net_struct` VALUES (105, '测试部门', '冰舞科技,北京总公司', 101, '0,100,101', 3, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2022-03-19 16:21:01');
-INSERT INTO `b5net_struct` VALUES (110, '山东分公司', '冰舞科技', 100, '0,100', 2, '冰舞', '1888888', '', '1', '2021-01-08 11:11:33', '2022-03-19 16:21:14');
-INSERT INTO `b5net_struct` VALUES (112, 'php开发', '冰舞科技,北京总公司,测试部门', 105, '0,100,101,105', 1, '', '', '', '1', '2021-03-29 18:02:29', '2022-03-19 16:21:01');
+INSERT INTO `b5net_struct` VALUES (100, '重庆科技学院', '', 0, '0', 0, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2023-06-08 17:11:20');
+INSERT INTO `b5net_struct` VALUES (101, '图书登记部门', '重庆科技学院', 100, '0,100', 1, '冰舞', '18888888888', '', '1', '2020-12-24 11:33:42', '2023-06-08 17:13:06');
+INSERT INTO `b5net_struct` VALUES (103, '一组', '重庆科技学院,图书登记部门', 101, '0,100,101', 1, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2023-06-08 17:13:16');
+INSERT INTO `b5net_struct` VALUES (104, '二组', '重庆科技学院,图书登记部门', 101, '0,100,101', 2, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2023-06-08 17:13:23');
+INSERT INTO `b5net_struct` VALUES (105, '测试部门', '重庆科技学院,图书登记部门', 101, '0,100,101', 3, '冰舞', '15888888888', '', '1', '2020-12-24 11:33:42', '2023-06-08 17:13:07');
+INSERT INTO `b5net_struct` VALUES (110, '图书馆行政部', '重庆科技学院', 100, '0,100', 2, '冰舞', '1888888', '', '1', '2021-01-08 11:11:33', '2023-06-08 17:12:51');
+INSERT INTO `b5net_struct` VALUES (112, '书籍整理部', '重庆科技学院,图书登记部门,测试部门', 105, '0,100,101,105', 1, '', '', '', '1', '2021-03-29 18:02:29', '2023-06-08 17:15:29');
 
 -- ----------------------------
 -- Table structure for b5net_user
@@ -492,13 +495,14 @@ CREATE TABLE `b5net_user`  (
   `borrowing` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '借阅次数',
   `purchase` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '购买次数',
   `price` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '消费金额',
+  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态 0正常 1拉黑 2借阅违约',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of b5net_user
 -- ----------------------------
-INSERT INTO `b5net_user` VALUES (1, '林志伟', '18225120508', '2023-06-08 16:15:23', 'ZS202306085989', 100.00, 0, 0, 0.00);
+INSERT INTO `b5net_user` VALUES (1, '林志伟', '18225120508', '2023-06-08 16:15:23', 'ZS202306085989', 100.00, 0, 0, 0.00, 0);
 
 -- ----------------------------
 -- Table structure for b5net_wechat_access
