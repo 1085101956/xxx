@@ -112,7 +112,7 @@ class BooksController extends BaseController
     {
         $orderBy = $params['orderBy']??[];//自定义的排序
         $orderByColumn = empty($params['orderByColumn']) ? '' : $params['orderByColumn'];
-        $isAsc = empty($params['isAsc']) ? 'asc' : $params['isAsc'];
+        $isAsc = empty($params['isAsc']) ? 'desc' : $params['isAsc'];
         $field = $params['field']??'';
         //表单的条件 where 的条件
         if (isset($params['where']) && is_array($params['where'])) {
@@ -181,6 +181,7 @@ class BooksController extends BaseController
 
         //处理排序
         if($orderByColumn){
+            $orderByColumn = 'a.id';
             $query = $query->order($orderByColumn, $isAsc);
         }
 
@@ -194,7 +195,7 @@ class BooksController extends BaseController
         }
         //默认最后加一个id asc
         if (!$hasId && $orderByColumn != 'id') {
-            $query = $query->order('a.id', 'asc');
+            $query = $query->order('a.id', 'desc');
         }
 
         return $query;
@@ -214,6 +215,8 @@ class BooksController extends BaseController
             $data['image'] = $data['image'][0];
             $data['admin_id'] = $session['adminLoginInfo']['info']['id'];
             $data['struct_id'] = $session['adminLoginInfo']['struct'][0]['id'];
+            $str="B".date('YmdH') . str_pad((string)mt_rand(1, 999999), 6, '0', STR_PAD_LEFT);
+            $data['code'] = $str;
             //验证
             if ($this->validate ?? false) {
                 //验证前数据处理
@@ -221,7 +224,6 @@ class BooksController extends BaseController
                 if(!is_array($data)){
                     return Result::error($data);
                 }
-
                 $res = validate($this->validate)->scene('add')->check($data);
                 if ($res !== true) {
                     return Result::error($res);
