@@ -31,6 +31,7 @@ class BooksBorrowingController extends BaseController
             $isExport = $params['isExport'] ?? 0;
 
             $query = Db::table($this->model::tableName());
+//            $query->leftJoin('b5net_books','')
             $query = $this->indexWhere($query, $params);
 
             //操作查询对象，可以进行语句处理以及数据权限处理
