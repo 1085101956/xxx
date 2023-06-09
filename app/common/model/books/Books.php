@@ -8,4 +8,6 @@ use app\common\BaseModel;
 class Books extends BaseModel
 {
     protected $table = 'b5net_books';
+    protected $deleteTime = 'delete_time';
+
 }
