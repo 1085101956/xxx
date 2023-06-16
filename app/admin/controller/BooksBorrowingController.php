@@ -190,8 +190,17 @@ class BooksBorrowingController extends BaseController
             if (!$info) {
                 return $this->toError('信息不存在');
             }
+//            var_dump($info);
+
             return $this->editRender($info,$request);
         }
+    }
+    protected function editRender(array $info,Request $request ):string{
+        $list = Db::table("b5net_user")
+            ->field('username,phone,library_card')
+            ->where('id',$info['user_id'])
+            ->find();
+        return $this->render('', ['input' => $request->get(),'username' => $list['username'].'-'.$list['phone'].'-'.$list['library_card'], 'info' => $info]);
     }
 
 }

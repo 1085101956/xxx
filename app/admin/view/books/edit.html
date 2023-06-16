@@ -1,0 +1,101 @@
+{extend name="layouts:form"/}
+{block name="css_common"}
+{asset:css name="select2" /}
+{/block}
+{block name="js_common"}
+{asset:js name="select2" /}
+{/block}
+{block name="content"}
+<div class="main-content">
+    <form class="form-horizontal m" id="form-edit">
+        <input type="hidden" name="id" value="{$info.id}">
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">书籍名称：</label>
+            <div class="col-sm-8">
+                <input type="text" name="title" value="{$info.title}" class="form-control" placeholder="请输入书籍名称" required autocomplete="off"/>
+            </div>
+        </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">售价：</label>
+        <div class="col-sm-8">
+            <input type="text" name="price" value="{$info.price}" class="form-control" placeholder="请输入售价" required autocomplete="off"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">书籍库存：</label>
+        <div class="col-sm-8">
+            <input type="number" name="number" value="{$info.number}" class="form-control" placeholder="请输入书籍名称" required autocomplete="off"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">书籍分类：</label>
+        <div class="col-sm-8">
+            <select class="select2" data-width="100%" id="posSelect" name="cate_id">
+                <option value="">选择分类</option>
+                {foreach $posList as $value}
+                <option value="{$value.id}" {eq name="cate_id" value="$value['id']"}selected{/eq}>{$value.name}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">书籍页数：</label>
+        <div class="col-sm-8">
+            <input type="number" name="pages" value="{$info.pages}" class="form-control" placeholder="请输入书籍页数" required autocomplete="off"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">书籍作者：</label>
+        <div class="col-sm-8">
+            <input type="text" name="author" value="{$info.author}" class="form-control" placeholder="请输入书籍作者" required autocomplete="off"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">出版年：</label>
+        <div class="col-sm-8">
+            <input type="date" name="publish_date" value="{$info.publish_date}" class="form-control" placeholder="请输入出版年" required autocomplete="off"/>
+        </div>
+    </div>
+<!--    <div class="form-group">-->
+<!--        <label class="col-sm-3 control-label is-required">书籍封面图：</label>-->
+<!--        <div class="col-sm-8">-->
+<!--            <input type="hidden" name="image" class="form-control" value="" id="img" required>-->
+<!--            {upload:img name="image" class="form-control" link="1" cat="demo"  tips="格式为jpg,jpeg,png,gif；大小不能超过10M" data="$info['image']"/}-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">书籍封面图：</label>
+        <div class="col-sm-8">
+            <input type="hidden" name="image" value="" id="img" required>
+            {upload:img name="image" class="form-control"  link="1" cat="demo" tips="格式为jpg,jpeg,png,gif；大小不能超过10M" data="$info['image']"/}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label is-required">书籍出版社：</label>
+        <div class="col-sm-8">
+            <input type="text" name="press" value="{$info.press}" class="form-control" placeholder="请输入出版社" required autocomplete="off"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label ">书籍介绍：</label>
+        <div class="col-sm-8">
+            <textarea name="introduce" class="form-control" rows="4" required autocomplete="off" placeholder="请输入书籍介绍">{$info.introduce}</textarea>
+        </div>
+    </div>
+</form>
+</div>
+{/block}
+
+{block name="script"}
+<script src="__STATIC__/admin/js/uploader.js?a=122"></script>
+<script>
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(oesUrl, $('#form-edit').serialize());
+        }
+    }
+</script>
+{/block}

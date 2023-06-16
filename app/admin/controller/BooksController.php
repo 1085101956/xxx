@@ -252,5 +252,60 @@ class BooksController extends BaseController
 
         }
     }
+    public function editAction(Request $request)
+    {
+        if ($request->isPost()) {
+            $data = $request->post();
+            $data['image'] = $data['image'][0];
+            //验证
+            if ($this->validate ?? false) {
+                //验证前数据处理
+                $data = $this->validateBefore($data,'edit');
+                if(!is_array($data)){
+                    return Result::error($data);
+                }
+
+                $res = validate($this->validate)->scene('edit')->check($data);
+                if ($res !== true) {
+                    return Result::error($res);
+                }
+            }
+            //数据预处理
+            $data = $this->saveBefore($data,'edit');
+            if(!is_array($data)){
+                return Result::error($data);
+            }
+
+            $result = $this->model::bUpdate($data);
+            if ($result === false) {
+                return Result::error('保存失败');
+            }
+            if ($result) {
+                $this->saveAfter($data, 'edit');
+            }
+            return Result::success('保存成功');
+        } else {
+            $id = $request->get('id',0);
+            if (!$id) {
+                return $this->toError('参数错误');
+            }
+            $info = $this->model::bFind($id);
+            if (!$info) {
+                return $this->toError('信息不存在');
+            }
+            return $this->editRender($info,$request);
+        }
+    }
+    /**
+     * 编辑渲染，方便重写
+     * @param Request $request
+     * @param array $info
+     * @return string
+     */
+    protected function editRender(array $info,Request $request ):string{
+        $posList = Db::table("b5net_cate")->where('status',0)->select()->toArray();
+        return $this->render('', ['input' => $request->get(),'cate_id' => $info['cate_id'],'info' => $info,'posList' => $posList]);
+//        return $this->render('', ['input' => $request->get(), 'info' => $info]);
+    }
 
 }
